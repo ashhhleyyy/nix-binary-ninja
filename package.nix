@@ -20,7 +20,7 @@
   libxkbcommon,
   wayland,
   kdePackages,
-  python3,
+  python313,
   libxml2,
 
   binaryNinjaEdition ? "personal",
@@ -50,7 +50,7 @@ stdenv.mkDerivation {
     makeWrapper
     auto-patchelf
     autoPatchelfHook
-    python3.pkgs.wrapPython
+    python313.pkgs.wrapPython
     kdePackages.wrapQtAppsHook
     copyDesktopItems
   ];
@@ -71,8 +71,8 @@ stdenv.mkDerivation {
     wayland
     libxml2.out
   ];
-  pythonDeps = [ python3.pkgs.pip ];
-  appendRunpaths = [ "${lib.getLib python3}/lib" ];
+  pythonDeps = [ python313.pkgs.pip ];
+  appendRunpaths = [ "${lib.getLib python313}/lib" ];
   qtWrapperArgs = lib.optionals forceWayland [
     "--set"
     "QT_QPA_PLATFORM"
@@ -107,6 +107,7 @@ stdenv.mkDerivation {
       -not -name 'liblldb.so.*' \
       -not -name 'libshiboken6.abi*.so.*' \
       -not -name 'libpyside6.abi*.so.*' \
+      -not -name 'libpython3*.so*' \
       -delete
     cp ${desktopIcon} $out/share/pixmaps/binaryninja.png
     chmod +x $out/opt/binaryninja/binaryninja
